@@ -5,6 +5,5 @@ struct Macro {
     void (*function)();
 };
 
-void leftQualsBackToBar();
 void doNothing();
 void runSelectedMacro(Macro macros[], size_t macroCount);

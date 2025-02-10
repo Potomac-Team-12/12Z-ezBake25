@@ -9,27 +9,24 @@
 #include "screen.hpp"
 #include "display/lvgl.h" 
 
+/* 12Z ez-template copied from 2145Z 2/5/25
+
+______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\____________________________________/\\\\\\\\\\\\\\\________________________________________         
+ __/\\\\\\\__/\\\///////\\\___\////////////\\\____________________________________\////////////\\\_________________________________________        
+  _\/////\\\_\///______\//\\\____________/\\\/_______________________________________________/\\\/____________________/\\\\\\\\\____________       
+   _____\/\\\___________/\\\/___________/\\\/________________/\\\\\\\\\\\___________________/\\\/______/\\\\\\\\\_____/\\\/////\\\___________      
+    _____\/\\\________/\\\//___________/\\\/_________________\///////////__________________/\\\/_______\////////\\\___\/\\\\\\\\\\____________     
+     _____\/\\\_____/\\\//____________/\\\/_______________________________________________/\\\/___________/\\\\\\\\\\__\/\\\//////_____________    
+      _____\/\\\___/\\\/_____________/\\\/_______________________________________________/\\\/____________/\\\/////\\\__\/\\\___________________   
+       _____\/\\\__/\\\\\\\\\\\\\\\__/\\\\\\\\\\\\\\\____________________________________/\\\\\\\\\\\\\\\_\//\\\\\\\\/\\_\/\\\___________________  
+        _____\///__\///////////////__\///////////////____________________________________\///////////////___\////////\//__\///____________________ 
+                     
+*/
+
+
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
-    {"Solo Awp (BLUE)", soloAwpBlue},
-    {"Solo Awp (RED)", soloAwpRed},
-    {"skills", skillsv2},
-    {"QUALS Positive side (RED)", positiveSideQualsRed},
-    {"QUALS Positive side (BLUE)", positiveSideQualsBlue},
-    {"QUALS Negative side (RED)", negativeSideQualsRed},
-    {"QUALS Negative side (BLUE)", negativeSideQualsBlue},
-    {"SIMPLE Positive side (RED)", positiveSideSimpleRed},
-    {"SIMPLE Positive side (BLUE)", positiveSideSimpleBlue},
-    {"SAMS POSITIVE side (RED)", samsPositiveSideRed},
-    {"SAMS POSITIVE side (BLUE)", samsPositiveSideBlue},
-    {"Positive side (RED)", positiveSideRed},
-    {"Positive side (BLUE)", positiveSideBlue},
-    {"Negative side (RED)", negativeSideRed},
-    {"Negative side (BLUE)", negativeSideBlue},
-    {"9123 Negative side (RED)", negativeSide9123Red},
-    {"9123 Negative side (BLUE)", negativeSide9123Blue},
-    {"Solo awp safe (RED)", soloAwpSafeRed},
-    {"Solo awp safe (BLUE)", soloAwpSafeBlue},
+    {"Solo Awp safe", soloSafe},
     {"Nothing", doNothingAuto}
 };
 
@@ -55,14 +52,12 @@ void initialize() {
 
     chassisInits();
 
-    liftLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    liftRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     // piston inits
-    intakeRaise.set_value(false);
-    backClamp.set_value(false);
+    goalClamp1.set_value(true);
+    goalClamp2.set_value(true);
     doinker.set_value(false);
-    ringRush.set_value(false);
 }
 
 /**
@@ -104,33 +99,33 @@ void opcontrol() {
         chassis.opcontrol_tank();
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-            intakeRaise.set_value(false);
+            // intakeRaise.set_value(false);
             doinker.set_value(false);
 
             liftControl();
         } else {           
             liftAutoControl(-1);
-            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake = 127; doinker.set_value(true); } 
-            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake = 127; doinker.set_value(false); }
-            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake = -127; doinker.set_value(false); } 
-            else { intake = 0; doinker.set_value(false); }   
+            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = 127; intake2 = 127; doinker.set_value(true); } 
+            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake1 = 127; intake2 = 127; doinker.set_value(false); }
+            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
+            else {intake1 = 0; intake2 = 0; doinker.set_value(false); }   
 
             if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-               backClamp.set_value(true);
+               goalClamp1.set_value(true);
+               goalClamp2.set_value(true);
             } else {
-               backClamp.set_value(false);
+               goalClamp1.set_value(false);
+               goalClamp2.set_value(false);
             }
         }
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) { motorCheck.suspend(); }
 
-        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) { liftSensor.reset_position(); }
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) { armSensor.reset_position(); }
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) { FIRST_RING_LIFT_VALUE += 0.001 * 360 * 100; pros::delay(40); }
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) { FIRST_RING_LIFT_VALUE -= 0.001 * 360 * 100; pros::delay(40); }
-
-        ringRush.set_value(false);
 
 		pros::delay(10);
 	}

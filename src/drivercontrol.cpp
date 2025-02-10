@@ -58,12 +58,14 @@ void tank_drive(double curve /* default is 7 in hpp file */) {
     set_tank(l_stick, r_stick);
 }
 
+
+// -- Arm/Lift PID 
 // Constants for lift positions
 double FIRST_RING_LIFT_VALUE = 0.077 * 360 * 100; 
 const double MAX_LIFT_VALUE = 0.45 * 360 * 100;
 
 // PID Control Constants
-double kP = 3;  // Adjust this if needed
+double kP = 3.0;  // Adjust this if needed
 double kI = 0.0;  // Currently no integral term
 double kD = 9.0;  // Add some derivative control for damping
 
@@ -73,8 +75,7 @@ double targetLiftValue = FIRST_RING_LIFT_VALUE;
 
 // Function to stop the lift and reset PID variables
 void stopLift() {
-    liftLeft.move_velocity(0);
-    liftRight.move_velocity(0);
+    armMotor.move_velocity(0);
     integral = 0;
     last_error = 0;
 }
@@ -83,7 +84,7 @@ void liftAutoControl(double targetLiftValue = FIRST_RING_LIFT_VALUE) {
     double resetValue;
 
     // Control loop for lift to reach target position
-      double currentLiftValue = liftSensor.get_position();  // Get current lift position
+      double currentLiftValue = armSensor.get_position();  // Get current lift position
       if (targetLiftValue == -1) {
           double resetValue = 0.00 * 360 * 100;  // Set lift to a reset position
           error = resetValue - currentLiftValue;
@@ -105,8 +106,7 @@ void liftAutoControl(double targetLiftValue = FIRST_RING_LIFT_VALUE) {
       
       // Apply motor speed with a max speed limit
       motorSpeed = std::clamp(motorSpeed, -12000.0, 12000.0);  // Prevent overspeeding
-      liftLeft.move_voltage(motorSpeed);
-      liftRight.move_voltage(motorSpeed);
+      armMotor.move_voltage(motorSpeed);
 
       last_error = error;
 }
@@ -114,35 +114,36 @@ void liftAutoControl(double targetLiftValue = FIRST_RING_LIFT_VALUE) {
 ez::PID liftPID{0.055, 0, 0.375, 0, "Lift"};
 
 void set_lift(int input) {
-  liftLeft.move(input);
-  liftRight.move(input);
+  armMotor.move(input);
 }
 
 void manualLiftControl() {
-    double currentLiftPosition = liftSensor.get_position();  // Get current lift position
+    double currentLiftPosition = armSensor.get_position();  // Get current lift position
 
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { 
-      intake = 127;
+      intake1 = 127;
+      intake2 = 127;
       liftAutoControl(0.12 * 360 * 100);
     } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
         // Move the lift down, allowing movement as long as it's above 0 degrees
-            liftLeft.move_velocity(200);  // Move lift down
-            liftRight.move_velocity(200);  // Move lift down  
-            intake.move_velocity(0);       
+            armMotor.move_velocity(200);  // Move lift down
+            intake1.move_velocity(0);     
+            intake2.move_velocity(0);       
     } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-            liftLeft.move_velocity(-200);  // Move lift up
-            liftRight.move_velocity(-200);  // Move lift up
-            intake.move_velocity(0);  
+            armMotor.move_velocity(-200);  // Move lift up
+            intake1.move_velocity(0);  
+            intake2.move_velocity(0);       
     } else {
-          liftLeft.move_velocity(0);
-          liftRight.move_velocity(0);
-          intake.move_velocity(0);  
+          armMotor.move_velocity(0); 
+          intake1.move_velocity(0);  
+          intake2.move_velocity(0);   
     }
 }
 
 void liftControl() {
   if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) { 
-    intake.move_velocity(600);
+    intake1.move_velocity(600);
+    intake2.move_velocity(600);
     liftAutoControl(FIRST_RING_LIFT_VALUE);
   } else {
     manualLiftControl();

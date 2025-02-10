@@ -4,21 +4,19 @@
 
 extern pros::Controller master;
 
-extern pros::Motor intake;
-extern pros::Motor liftLeft;
-extern pros::Motor liftRight;
+extern pros::ADIDigitalOut doinker;
+extern pros::ADIDigitalOut goalClamp1;
+extern pros::ADIDigitalOut goalClamp2;
 
+extern pros::Rotation armSensor;
+extern pros::Motor armMotor;
+
+extern pros::Motor intake1;
+extern pros::Motor intake2;
 
 extern pros::MotorGroup left_side_motors;
 extern pros::MotorGroup right_side_motors;
 
-extern pros::ADIDigitalOut intakeRaise;
-extern pros::ADIDigitalOut backClamp;
-extern pros::ADIDigitalOut doinker;
-extern pros::ADIDigitalOut ringRush;
-
-
-extern pros::Rotation liftSensor;
 
 extern bool wingsOut;
 extern bool liftUp;

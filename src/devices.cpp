@@ -9,43 +9,39 @@ bool liftUp = false;
 
 pros::Controller master (pros::E_CONTROLLER_MASTER);
 
-pros::ADIDigitalOut intakeRaise('D');
-pros::ADIDigitalOut doinker('C');
-pros::ADIDigitalOut ringRush('H');
-pros::ADIDigitalOut backClamp('E');
+pros::ADIDigitalOut doinker('G');
+pros::ADIDigitalOut goalClamp1('A');
+pros::ADIDigitalOut goalClamp2('B');
 
-pros::Rotation liftSensor(20, true);
+pros::Rotation armSensor (10, true);
+pros::Motor armMotor (7, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 
-pros::Motor intake (4, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES);
-pros::Motor liftLeft (19, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-pros::Motor liftRight (12, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor intake1 (5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor intake2 (6, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 
-//pros::MotorGroup left_motors({-1, 2, -3}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
-//pros::MotorGroup right_motors({4, -5, 6}, pros::MotorGearset::blue); // right motors use 600 RPM cartridge 
-
-pros::Motor leftFront(7, pros::E_MOTOR_GEARSET_06, true); 
-pros::Motor leftMiddle(9, pros::E_MOTOR_GEARSET_06, true); 
-pros::Motor leftBack(10, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightFront(3, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightMiddle(2, pros::E_MOTOR_GEARSET_06, false); 
-pros::Motor rightBack(1, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor leftFront(1, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor leftMiddle(2, pros::E_MOTOR_GEARSET_06, true); 
+pros::Motor leftBack(3, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor rightFront(11, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor rightMiddle(12, pros::E_MOTOR_GEARSET_06, false); 
+pros::Motor rightBack(13, pros::E_MOTOR_GEARSET_06, true); 
 
 pros::MotorGroup left_side_motors({leftFront, leftMiddle, leftBack,});
 pros::MotorGroup right_side_motors({rightFront, rightMiddle, rightBack});
 
-pros::Imu imu(13); 
+pros::Imu imu(4); 
 
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-7, -9, 10}
+  {-1, -2, 3}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{3, 2, -1} 
+  ,{11, 12, -13} 
 
   // IMU Port
-  ,13
+  ,4
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
@@ -59,7 +55,7 @@ Drive chassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,1.3333
+  ,0.6
 
 
   // Uncomment if using tracking wheels
@@ -82,7 +78,7 @@ Drive chassis (
 
 void checkMotorsAndPrintTemperature() {
     std::vector<pros::Motor> motors = {
-      leftFront, leftBack, leftMiddle, rightFront, rightBack, rightMiddle, intake, liftLeft, liftRight
+      leftFront, leftBack, leftMiddle, rightFront, rightBack, rightMiddle, intake1, intake2, armMotor,
     };
 
     int totalTime = 105; // 1 minute 45 seconds
