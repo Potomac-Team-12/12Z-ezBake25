@@ -28,9 +28,12 @@ void safe_exit_conditions() {
   chassis.pid_drive_exit_condition_set(150_ms, 1_in, 300_ms, 3_in, 500_ms, 500_ms);
 }
 
-void soloSafe() { 
+void soloAwpSafe(bool isRed) { 
+  double sign = isRed ? 1 : -1;
+
   chassis.drive_angle_set(-50 * sign);
 
+  // intakeRaise.set_value(true);
   pros::delay(200);
   intake1 = 127;
   intake2 = 127;
@@ -40,8 +43,8 @@ void soloSafe() {
   chassis.pid_wait();
 
   pros::delay(200);
+  // intakeRaise.set_value(false);
   pros::delay(200);
-
 
   intake1 = 0;
   intake2 = 0;
@@ -69,8 +72,8 @@ void soloSafe() {
 
   intake1 = 127;
   intake2 = 127;
+
   pros::delay(750);
-  
   intake1 = 0;
   intake2 = 0;
 
@@ -91,7 +94,7 @@ void soloSafe() {
   chassis.pid_wait();
 
   goalClamp1.set_value(false);
-  goalClamp2.set_value(false);
+  goalClamp2.set_value(false);  
   pros::delay(300);
 
   chassis.pid_turn_set(90 * sign, TURN_SPEED);
@@ -128,9 +131,14 @@ void soloSafe() {
   chassis.pid_drive_set(12, DRIVE_SPEED, true);
   pros::delay(100);
   chassis.pid_wait();
-
-
 }
+
+void soloAwpSafeBlue() { soloAwpSafe(false); }
+
+void soloAwpSafeRed() { soloAwpSafe(true); }
+
+
+
 
 void doNothingAuto() {
   // do nothing

@@ -16,6 +16,9 @@ void set_drive_to_hold();
 void spinLift(double power);
 void spinLiftPID(double rpm);
 
+extern bool goalClampToggle;
+void goalClamp_toggler();
+
 void liftControl();
 void liftAutoControl(double targetLiftValue);
 void startLiftTask(double targetLiftValue);

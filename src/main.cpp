@@ -26,7 +26,8 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
-    {"Solo Awp safe", soloSafe},
+    {"Solo AWP Red", soloAwpSafeRed},
+    {"Solo AWP Blu", soloAwpSafeBlue},
     {"Nothing", doNothingAuto}
 };
 
@@ -98,7 +99,7 @@ void opcontrol() {
 	while (true) {
         chassis.opcontrol_tank();
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
             // intakeRaise.set_value(false);
             doinker.set_value(false);
 
@@ -109,15 +110,11 @@ void opcontrol() {
             else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake1 = 127; intake2 = 127; doinker.set_value(false); }
             else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
             else {intake1 = 0; intake2 = 0; doinker.set_value(false); }   
-
-            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-               goalClamp1.set_value(true);
-               goalClamp2.set_value(true);
-            } else {
-               goalClamp1.set_value(false);
-               goalClamp2.set_value(false);
-            }
         }
+
+        
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) { goalClamp_toggler; } 
+        
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) { motorCheck.suspend(); }
 

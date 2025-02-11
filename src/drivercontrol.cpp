@@ -58,6 +58,15 @@ void tank_drive(double curve /* default is 7 in hpp file */) {
     set_tank(l_stick, r_stick);
 }
 
+void goalClamp_toggler() {
+  goalClampToggle != goalClampToggle;
+  if (goalClampToggle){
+      goalClamp1.set_value(true);
+      goalClamp2.set_value(true);
+  } else {
+      goalClamp1.set_value(false);
+      goalClamp2.set_value(false); } 
+}
 
 // -- Arm/Lift PID 
 // Constants for lift positions

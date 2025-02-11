@@ -20,6 +20,7 @@ extern pros::MotorGroup right_side_motors;
 
 extern bool wingsOut;
 extern bool liftUp;
+extern bool goalClampToggle;
 
 extern Drive chassis;
 

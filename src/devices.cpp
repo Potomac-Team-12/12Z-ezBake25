@@ -6,6 +6,7 @@
 #include "pros/rotation.hpp"
 bool wingsOut = false;
 bool liftUp = false;
+bool goalClampToggle = false;
 
 pros::Controller master (pros::E_CONTROLLER_MASTER);
 
@@ -14,7 +15,7 @@ pros::ADIDigitalOut goalClamp1('A');
 pros::ADIDigitalOut goalClamp2('B');
 
 pros::Rotation armSensor (10, true);
-pros::Motor armMotor (7, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor armMotor (7, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
 
 pros::Motor intake1 (5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
 pros::Motor intake2 (6, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
