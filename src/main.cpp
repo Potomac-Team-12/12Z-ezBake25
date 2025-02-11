@@ -55,7 +55,7 @@ void initialize() {
 
     armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-    // piston inits
+    // -- Piston Inits --
     goalClamp1.set_value(true);
     goalClamp2.set_value(true);
     doinker.set_value(false);
@@ -89,41 +89,54 @@ void autonomous() {
  */
 void opcontrol() {
     set_drive_to_coast();
-
     // task to make sure all motors are plugged in and check the temperature of the drivetrain
     pros::Task motorCheck(checkMotorsAndPrintTemperature);
 
-    bool backClamped = false;
-    bool clawUp = false;
-
+    bool clampEngaged = false;
+    bool lastR2State = false;
+    // toggles
+    
 	while (true) {
         chassis.opcontrol_tank();
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-            // intakeRaise.set_value(false);
-            doinker.set_value(false);
-
-            liftControl();
-        } else {           
-            liftAutoControl(-1);
-            if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = 127; intake2 = 127; doinker.set_value(true); } 
-            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake1 = 127; intake2 = 127; doinker.set_value(false); }
-            else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
-            else {intake1 = 0; intake2 = 0; doinker.set_value(false); }   
-        }
+        // ---- 12Z custom ----
+        
+        // Toggle logic for R2 button - mogo clamp
+        bool currentR2State = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
+        if (currentR2State && !lastR2State) {  // Detect button press (not hold)
+            clampEngaged = !clampEngaged;      // Toggle clamp state
+            // Set clamp pistons based on the new state
+            goalClamp1.set_value(clampEngaged);
+            goalClamp2.set_value(clampEngaged); }
+        lastR2State = currentR2State;  // Update last state for next loop
 
         
-        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) { goalClamp_toggler; } 
-        
+        // -- Controls
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {doinker.set_value(true); }
+        else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake1 = 127; intake2 = 127; doinker.set_value(false); }
+        else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
+        else {intake1 = 0; intake2 = 0; doinker.set_value(false); } 
 
-        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) { motorCheck.suspend(); }
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) { motorCheck.suspend(); } // Stop remote from buzzing if motor disconnect
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) { armSensor.reset_position(); }
 
-        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) { armSensor.reset_position(); }
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) { FIRST_RING_LIFT_VALUE += 0.001 * 360 * 100; pros::delay(40); }
-
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) { FIRST_RING_LIFT_VALUE -= 0.001 * 360 * 100; pros::delay(40); }
 
 		pros::delay(10);
 	}
 }
+
+// if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+//     // intakeRaise.set_value(false);
+//     doinker.set_value(false);
+
+//     liftControl();
+// } else {           
+//     liftAutoControl(-1);
+//     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = 127; intake2 = 127; doinker.set_value(true); } 
+//     else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {intake1 = 127; intake2 = 127; doinker.set_value(false); }
+//     else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
+//     else {intake1 = 0; intake2 = 0; doinker.set_value(false); }   
+// }

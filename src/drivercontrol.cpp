@@ -58,16 +58,6 @@ void tank_drive(double curve /* default is 7 in hpp file */) {
     set_tank(l_stick, r_stick);
 }
 
-void goalClamp_toggler() {
-  goalClampToggle != goalClampToggle;
-  if (goalClampToggle){
-      goalClamp1.set_value(true);
-      goalClamp2.set_value(true);
-  } else {
-      goalClamp1.set_value(false);
-      goalClamp2.set_value(false); } 
-}
-
 // -- Arm/Lift PID 
 // Constants for lift positions
 double FIRST_RING_LIFT_VALUE = 0.077 * 360 * 100; 
@@ -174,3 +164,15 @@ void startLiftTask(double targetLiftValue) {
   pros::Task liftTask(liftLoop);
 }
 
+
+// -- 12Z custom --
+bool goalClamp_toggle = true;
+void goalClamp () {
+  goalClamp_toggle = !goalClamp_toggle;
+  if (goalClamp_toggle) {
+    goalClamp1.set_value(true);
+    goalClamp2.set_value(true);
+  } else {
+    goalClamp1.set_value(false);
+    goalClamp2.set_value(false);
+  } }
