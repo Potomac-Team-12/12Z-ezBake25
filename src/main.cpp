@@ -26,6 +26,7 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
+    {"Blue Rings", $blue_neg_rings},
     {"Solo AWP Red", soloAwpSafeRed},
     {"Solo AWP Blu", soloAwpSafeBlue},
     {"Nothing", doNothingAuto}
