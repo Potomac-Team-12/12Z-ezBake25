@@ -28,6 +28,13 @@ void safe_exit_conditions() {
   chassis.pid_drive_exit_condition_set(150_ms, 1_in, 300_ms, 3_in, 500_ms, 500_ms);
 }
 
+void testAuto() {
+  chassis.drive_angle_set(0);
+
+  chassis.pid_drive_set(24, 100, false, true);
+
+}
+
 void soloAwpSafe(bool isRed) { 
   double sign = isRed ? 1 : -1;
 

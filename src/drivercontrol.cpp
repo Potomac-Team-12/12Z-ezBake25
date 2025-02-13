@@ -180,88 +180,76 @@ void goalClamp () {
 
 
 // --- Arm/Lift PID Control ---
-// Positions (based on screen angles)
-double homePosition = 169.5 * 100;  // Off position (motor disengaged)  (in centidegrees)
-double midPosition = 156.0 * 100;   // Mid position 
-double highPosition = 50.0 * 100;   // High position
+double homePosition = 169.5 * 100;  // Off position (motor disengaged)
+double midPosition = 156.0 * 100;   // Mid position
+double highPosition = 50.0 * 100; // high position
+//old   -   homePosition = 81.0;   double midPosition = 69.0;   highPosition = 320.0; 
 
 // Flags
 bool toggleA = false;             // Tracks Button A toggle state
 bool toggleB = false;             // Tracks Button B toggle state
 bool disengageRequested = false;  // Tracks if disengage is requested
-bool armEngaged = false;
-
+bool armEngage = false;
 // PID constants
-double kP = 0.8;    
-double kI = 0.005;   
-double kD = 0.4;    
-double threshold = 100.0;  // Adjusted for centidegrees
+double kP = 0.35;    
+double kI = 0.002;   
+double kD = 1.5;    
+double threshold = 3.0; 
 
-// Function to disengage the motor
 void disengageMotor() {
-    disengageRequested = true;
-    armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    armMotor.brake();
-    armEngaged = false;
+  disengageRequested = true; // Set disengage flag
+  armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  armMotor.brake();      // Stop the motor immediately
+  armEngage = false;
 }
 
 // Function to clamp a value
 double clamp(double value, double minVal, double maxVal) {
-    return std::max(minVal, std::min(value, maxVal));
+    if (value < minVal) return minVal;
+    if (value > maxVal) return maxVal;
+    return value;
 }
-
 // PID control function
 void moveToPositionPID(double targetPosition) {
   double error = 0, prevError = 0, integral = 0, derivative = 0;
   double output = 0;
-  double maxPower = 110.0;  // Reduce max power to avoid overshoot
-  double minPower = 20.0;  // Minimum power to prevent stalling
+  double maxPower = 127.0;
 
-  armEngaged = true;
-  disengageRequested = false;
+  armEngage = true;
+  disengageRequested = false;  // Reset disengage flag
 
   while (!disengageRequested) {
-      if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) || disengageRequested) {
-          disengageMotor(); // Stop the motor
-          return; // Exit the PID loop
-      }
+    // Check if disengage is requested
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) or disengageRequested) {
+      disengageMotor(); // Stop the motor
+      armMotor.brake(); // Immediately stop the motor
+      return;               // Exit the PID loop
+    }
+    
+    // Calculate the error (desired position - current position)
+    error = targetPosition - armSensor.get_angle();
 
-      // Get current position in centidegrees (ensure correct units)
-      double currentPosition = armSensor.get_position() * 100; // Convert degrees to centidegrees
+    // Adjust error to ensure the shortest path (positive or negative direction)
+    if (error > 18000.0) {
+        error -= 36000.0;  // Rotate counterclockwise (shortest path)
+    } else if (error < -18000.0) {
+        error += 36000.0;  // Rotate clockwise (shortest path)
+    }
+    integral += error;
+    integral = clamp(integral, -10, 10);  // New limit added
+    derivative = error - prevError;
+    // Calculate motor output
+    output = (kP * error) + (kI * integral) + (kD * derivative);
+    output = clamp(output, -maxPower, maxPower);
+    armMotor.move(output);
+    // Break when within the threshold
+    if (std::abs(error) <= threshold) {
+      armMotor.move_velocity(0);
+      armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+      return;
+    }
 
-      // Compute error
-      error = targetPosition - currentPosition;
-
-      // Handle wraparound correction
-      if (error > 18000.0) error -= 36000.0;
-      else if (error < -18000.0) error += 36000.0;
-
-      // Integral Windup Prevention
-      if (std::abs(error) < 2000) { 
-          integral += error;
-      } else {
-          integral = 0; 
-      }
-
-      derivative = error - prevError;
-      // Compute PID output
-      output = (kP * error) + (kI * integral) + (kD * derivative);
-      // Clamp output to prevent excessive power
-      output = clamp(output, -maxPower, maxPower);
-      // Prevent stalling by ensuring minimum power is applied
-      if (std::abs(output) < minPower && std::abs(error) > threshold) {
-          output = (output > 0) ? minPower : -minPower;
-      }
-      // Move motor with precise control
-      armMotor.move_voltage(output * 12000.0 / 127.0);
-      // Stop and hold position when within threshold
-      if (std::abs(error) <= threshold) {
-          armMotor.move_velocity(0);
-          armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-          return;
-      }
-
-      prevError = error;
-      pros::delay(20);
+    prevError = error;
+    pros::delay(20);
   }
 }

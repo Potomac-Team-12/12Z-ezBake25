@@ -93,43 +93,43 @@ void opcontrol() {
     // task to make sure all motors are plugged in and check the temperature of the drivetrain
     pros::Task motorCheck(checkMotorsAndPrintTemperature);
 
+    // Bools for toggles
+    bool lastAState = false;
+    bool lastBState = false;    
     bool clampEngaged = false;
     bool lastR2State = false;
-
-    // toggles
     
-	while (true) {
+    
+	while (true) { // --------------
         chassis.opcontrol_tank();
 
-        // ---- 12Z custom ----
-        
-        // -- Toggle logic for R2 button - Goal clamp --
-        // bool currentR2State = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
-        // if (currentR2State && !lastR2State) {  // Detect button press (not hold)
-        //     clampEngaged = !clampEngaged;      // Toggle clamp state
-        //     // Set clamp pistons based on the new state
-        //     goalClamp1.set_value(clampEngaged);
-        //     goalClamp2.set_value(clampEngaged); }
-        // lastR2State = currentR2State;  // Update last state for next loop
-
         // -- Arm Control --
-        if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+        // Variables to store the previous states of the buttons
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !lastAState) {
             toggleA = !toggleA;
             if (toggleA) {
                 moveToPositionPID(midPosition);
             } else {
+                armMotor.move_velocity(80);  
+                while (armSensor.get_angle() > homePosition - 300) {  
+                    pros::delay(10);
+                }
                 disengageMotor(); 
             } }
-        if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+        lastAState = master.get_digital(pros::E_CONTROLLER_DIGITAL_A); // Update last state
+
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !lastBState) {
             toggleB = !toggleB;
             if (toggleB) {
                 moveToPositionPID(highPosition);
             } else {
-                armMotor.move_velocity(60);  
-                while (std::abs(armSensor.get_angle() - homePosition) > threshold) {
+                armMotor.move_velocity(80);  
+                while (armSensor.get_angle() > homePosition - 500 + threshold) {  // Stop 5 degrees before
                     pros::delay(10);
                 }
-                disengageMotor(); } }
+                disengageMotor(); 
+            } }
+        lastBState = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);  // Update last state
 
         
         // Manual control, if R1 && R2 pressing then L1 and L2
@@ -137,10 +137,11 @@ void opcontrol() {
             doinker.set_value(false);
             goalClamp1.set_value(false);
             goalClamp2.set_value(false);
+            armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
             if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-                armMotor.move_velocity(127);  // Move up
+                armMotor.move_velocity(-127);  // Move up
             } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-                armMotor.move_velocity(-127); // Move down
+                armMotor.move_velocity(127); // Move down
             } else {
                 armMotor.move_velocity(0);    // Stop if neither L1 nor L2 is pressed 
             }
