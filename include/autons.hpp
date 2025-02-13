@@ -10,3 +10,5 @@ void soloAwpSafe();
 void soloAwpSafeRed();
 void soloAwpSafeBlue();
 
+void $blue_neg_rings();
+void blue_neg_rings();
