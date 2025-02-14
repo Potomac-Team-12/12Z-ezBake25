@@ -4,14 +4,14 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
-        "/Users/quentintoner24/Documents/GitHub/12Z-ezBake25/include"
+        "/Users/sophiavilela/Documents/Robotics/GitHub/12Z-ezBake25/include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "/Users/quentintoner24/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
+      "compilerPath": "/Users/sophiavilela/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
       "cStandard": "gnu11",
       "cppStandard": "gnu++20",
       "intelliSenseMode": "gcc-arm",
@@ -20,7 +20,7 @@
       ],
       "browse": {
         "path": [
-          "/Users/quentintoner24/Documents/GitHub/12Z-ezBake25"
+          "/Users/sophiavilela/Documents/Robotics/GitHub/12Z-ezBake25"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
