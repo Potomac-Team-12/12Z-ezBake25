@@ -56,7 +56,8 @@ Drive chassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,0.6
+  // eg. 48:36 = 1.3333
+  ,1.3333
 
 
   // Uncomment if using tracking wheels
@@ -142,8 +143,9 @@ void driverControlCountdown() {
 }
 
 void default_constants() {
-  chassis.pid_heading_constants_set(3, 0, 20);
-  chassis.pid_drive_constants_set(10, 0, 100);
+  chassis.pid_heading_constants_set(4, 0, 35);
+  // -- Tune these --
+  chassis.pid_drive_constants_set(7, 0.1, 25);
   chassis.pid_turn_constants_set(3, 0, 20);
   chassis.pid_swing_constants_set(5, 0, 30);
 

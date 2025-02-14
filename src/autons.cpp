@@ -31,8 +31,12 @@ void safe_exit_conditions() {
 void testAuto() {
   chassis.drive_angle_set(0);
 
-  chassis.pid_drive_set(24, 100, false, true);
-
+  chassis.pid_drive_set(24, DRIVE_SPEED, true, true);
+  pros::delay(50);
+  chassis.pid_wait();
+  // chassis.pid_turn_set(180, TURN_SPEED);
+  // pros::delay(50);
+  // chassis.pid_wait();
 }
 
 void soloAwpSafe(bool isRed) { 
@@ -153,14 +157,26 @@ void $blue_neg_rings(){
   chassis.drive_angle_set(180);
 
   chassis.pid_drive_set(-24, 70,true);
+  pros::delay(100);
+  chassis.pid_wait();
+
   chassis.pid_turn_set(90, TURN_SPEED);
   pros::delay(100);
+  chassis.pid_wait();
+
   intake1 = 127;
   intake2 = 127;
-  chassis.pid_drive_set(-4, DRIVE_SPEED, true);
+
+  chassis.pid_drive_set(-4, DRIVE_SPEED, true, true);
   pros::delay(100);
-  chassis.pid_drive_set(24, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(24, DRIVE_SPEED, true, true);
   pros::delay(100);
+  chassis.pid_wait();
+  
   chassis.pid_turn_set(-45, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
   
 }

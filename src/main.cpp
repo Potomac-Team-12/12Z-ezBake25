@@ -26,9 +26,11 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
+    {"Test 24", testAuto},
     {"Blue Rings", $blue_neg_rings},
     {"Solo AWP Red", soloAwpSafeRed},
     {"Solo AWP Blu", soloAwpSafeBlue},
+    // {"Test 24", testAuto},
     {"Nothing", doNothingAuto}
 };
 
@@ -51,7 +53,7 @@ void initialize() {
         // customizable color scheme, play around with it!
         LV_COLOR_MAKE(0xD2, 0x46, 0x8C)
     );
-
+    default_constants();
     chassisInits();
 
     armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -82,7 +84,7 @@ void competition_initialize() {}
  */
 void autonomous() {
     set_drive_to_hold();
-
+    default_constants();
     runSelectedAuton(autonFunctions, autonCount);
 }
 
