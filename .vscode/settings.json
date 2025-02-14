@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "future": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "bitset": "cpp"
     }
 }

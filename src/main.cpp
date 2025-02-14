@@ -27,11 +27,14 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
     {"Test 24", testAuto},
-    {"Blue Rings", $blue_neg_rings},
+    {"$Blue Rings", $blue_neg_rings},
+    {"diff setup - (no stake) - Blue Rings", blue_neg_rings},
+    {"red ", red_neg_rings},
     {"Solo AWP Red", soloAwpSafeRed},
     {"Solo AWP Blu", soloAwpSafeBlue},
     // {"Test 24", testAuto},
-    {"Nothing", doNothingAuto}
+    {"Nothing", doNothingAuto},
+    {"Skills2 JAR", skills_jar}
 };
 
 // this is needed for LVGL displaying! Do not touch!

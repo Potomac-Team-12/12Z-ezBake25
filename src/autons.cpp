@@ -153,10 +153,10 @@ void doNothingAuto() {
 }
 
 
-void $blue_neg_rings(){
+void $blue_neg_rings(){ //$ not working fully
   chassis.drive_angle_set(180);
 
-  chassis.pid_drive_set(-24, 70,true);
+  chassis.pid_drive_set(-11.45, 70, true, true);
   pros::delay(100);
   chassis.pid_wait();
 
@@ -164,19 +164,335 @@ void $blue_neg_rings(){
   pros::delay(100);
   chassis.pid_wait();
 
+  chassis.pid_drive_set(-4.35, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
   intake1 = 127;
   intake2 = 127;
 
-  chassis.pid_drive_set(-4, DRIVE_SPEED, true, true);
+  pros::delay(700);
+
+  chassis.pid_drive_set(20, DRIVE_SPEED, true, true);
   pros::delay(100);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(24, DRIVE_SPEED, true, true);
+  intake1 = 0;
+  intake2 = 0;
+
+  chassis.pid_turn_set(0, TURN_SPEED);
   pros::delay(100);
   chassis.pid_wait();
+  
+  chassis.pid_drive_set(-10, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
   
   chassis.pid_turn_set(-45, TURN_SPEED);
   pros::delay(100);
   chassis.pid_wait();
   
+  chassis.pid_drive_set(-14, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(false);
+  goalClamp2.set_value(false);
+
+  chassis.pid_turn_set(180, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  intake1 = 127;
+  intake2 = 127;
+
+  chassis.pid_drive_set(24, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.pid_turn_set(90, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(16, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-7.5, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(75, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(8, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
 }
+
+void blue_neg_rings(){ //one tile over
+  chassis.drive_angle_set(180);
+  
+  chassis.pid_drive_set(8, DRIVE_SPEED, true, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(240, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(-29, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(false);
+  goalClamp2.set_value(false);
+
+  pros::delay(200);
+
+  chassis.pid_turn_set(180, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  intake1 = 127;
+  intake2 = 127;
+
+  chassis.pid_drive_set(24, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.pid_turn_set(82.5, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(16, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-7.5, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(62, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(8, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-10, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(30, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+}
+
+void red_neg_rings(){
+  chassis.drive_angle_set(0);
+  
+  chassis.pid_drive_set(8, DRIVE_SPEED, true, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-50, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(-29, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(false);
+  goalClamp2.set_value(false);
+
+  pros::delay(200);
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  intake1 = 127;
+  intake2 = 127;
+
+  chassis.pid_drive_set(18, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.pid_turn_set(85, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(16, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(70, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(12, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(30, DRIVE_SPEED, true, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+}
+
+
+// void skills2_jar() {
+//   //set up stuff
+//   chassis.drive_angle_set(0);
+//   goalClamp1.set_value(true);
+//   goalClamp2.set_value(true);
+//   //armMotor.spin(reverse);
+
+//   intake1 = 127;
+//   intake2 = 127;
+
+//   chassis.pid_drive_set(-1, 50, true, true);
+
+//   //ring
+
+//   pros::delay(1000);
+//   intake1 = 0;
+//   intake2 = 0;
+
+//   //ring on goal 
+//   chassis.drive_distance(14.75); //goes forward 
+//   //chassis.turn_to_angle(1); //face goal 
+//   chassis.turn_to_angle(0); //face goal 
+//   chassis.drive_distance(-16.75); //goes back into the goal
+//   pros::delay(100); //wait
+//   chassis.drive_distance(-2.45);
+//   goalClamp1.set(false); //close clamp
+//   goalClamp2.set(false);
+//   pros::delay(250); 
+
+
+//   //ring 1
+//   chassis.turn_to_angle(182);
+//   intake1 = 127;
+//   intake2 = 127;
+//   chassis.drive_distance(24.5); 
+//   pros::delay(650); 
+//   chassis.drive_distance(-10); 
+//   //ring 2
+//   chassis.turn_to_angle(230);
+//   chassis.drive_distance(15); 
+//   pros::delay(650); 
+//   //ring 3
+//   chassis.turn_to_angle(140);
+//   chassis.drive_distance(18.5); //16.5
+//   pros::delay(150); 
+
+//   //ring 4
+//   chassis.turn_to_angle(92);
+//   chassis.drive_distance(44); 
+//   //ring 5
+//   chassis.turn_to_angle(60); 
+//   chassis.drive_distance(12); 
+//   chassis.turn_to_angle(-45); 
+//   chassis.drive_distance(45); 
+//   pros::delay(450); 
+//   //ring 6 
+//   chassis.turn_to_angle(180);
+//   chassis.drive_distance(28); 
+//   pros::delay(450); 
+//   //back to goal
+//   chassis.turn_to_angle(75);
+//   chassis.drive_distance(-26); 
+//   // chassis.turn_to_angle(88);
+//   // chassis.drive_distance(-3); 
+//   //old spot for spotting intakes
+//   intake1 = -127;
+//   intake2 = -127;
+//   pros::delay(200); 
+//   goalClamp1.set(true); //open clamp
+//   goalClamp2.set(true);
+//   //add
+//   //chassis.drive_distance(4);
+//   intakeS1.stop();
+//   intakeS2.stop(); 
+
+//   //next stack
+//   chassis.turn_to_angle(0); //15
+//   chassis.drive_distance(20); //38
+//   //chassis.drive_distance(36); //38
+//   chassis.turn_to_angle(8); //15
+//   chassis.drive_distance(42);
+//   chassis.turn_to_angle(182);
+//   chassis.drive_distance(-6);
+//   pros::delay(650); 
+//   chassis.drive_distance(-3.25);
+//   goalClamp1.set(false); //close clamp
+//   goalClamp2.set(false);
+//   pros::delay(250); 
+//   intakeS1.spin(fwd);
+//   intakeS2.spin(fwd); 
+
+//   //ring 1
+//   chassis.turn_to_angle(90);
+//   chassis.drive_distance(26); 
+//   //ring 2 
+//   chassis.turn_to_angle(0);
+//   chassis.drive_distance(26); 
+//   //ring 3
+//   chassis.turn_to_angle(65);
+//   chassis.drive_distance(21.5); 
+//   pros::delay(1000); 
+//   chassis.drive_distance(-20);
+//   //ring 4 & 5
+//   chassis.turn_to_angle(270);
+//   chassis.drive_distance(38); 
+//   //ring 6
+//   chassis.drive_distance(-12); 
+//   chassis.turn_to_angle(0);
+//   chassis.drive_distance(14); 
+//   //put goal in corner
+//   chassis.drive_distance(-9); 
+//   chassis.turn_to_angle(135);
+//   chassis.drive_distance(-9); 
+//   goalClamp1.set(true); //open clamp
+//   goalClamp2.set(true);
+//   pros::delay(250); 
+//   intakeS1.spin(reverse);
+//   intakeS2.spin(reverse); 
+//   //go to other side
+//   chassis.drive_distance(12); 
+//   chassis.turn_to_angle(90);
+
+//   //other side
+//   chassis.drive_distance(104); 
+//   chassis.turn_to_angle(180);
+//   chassis.drive_distance(110); 
+//   chassis.drive_distance(-110); 
+//   chassis.drive_distance(110); 
+//   chassis.drive_distance(-110); 
+// }
