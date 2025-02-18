@@ -17,4 +17,4 @@ void blue_neg_rings();
 void red_neg_rings();
 
 
-void skills_jar();
+void skills2_jar();

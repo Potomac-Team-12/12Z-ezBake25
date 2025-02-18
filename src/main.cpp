@@ -34,7 +34,7 @@ AutonFunction autonFunctions[] = {
     {"Solo AWP Blu", soloAwpSafeBlue},
     // {"Test 24", testAuto},
     {"Nothing", doNothingAuto},
-    {"Skills2 JAR", skills_jar}
+    {"Skills2 JAR", skills2_jar}
 };
 
 // this is needed for LVGL displaying! Do not touch!
@@ -107,7 +107,8 @@ void opcontrol() {
     
     
 	while (true) { // --------------
-        chassis.opcontrol_tank();
+        // chassis.opcontrol_tank();
+        chassis.opcontrol_arcade_standard(ez::SPLIT);
 
         // -- Arm Control --
         // Variables to store the previous states of the buttons
