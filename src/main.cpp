@@ -30,6 +30,7 @@ AutonFunction autonFunctions[] = {
     {"$Blue Rings", $blue_neg_rings},
     {"diff setup - (no stake) - Blue Rings", blue_neg_rings},
     {"red ", red_neg_rings},
+    {"new skills", newskills},
     {"Solo AWP Red", soloAwpSafeRed},
     {"Solo AWP Blu", soloAwpSafeBlue},
     // {"Test 24", testAuto},
@@ -146,9 +147,9 @@ void opcontrol() {
             goalClamp2.set_value(false);
             armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
             if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-                armMotor.move_velocity(-127);  // Move up
+                armMotor.move_velocity(127);  // Move up
             } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-                armMotor.move_velocity(127); // Move down
+                armMotor.move_velocity(-127); // Move down
             } else {
                 armMotor.move_velocity(0);    // Stop if neither L1 nor L2 is pressed 
             }

@@ -18,3 +18,4 @@ void red_neg_rings();
 
 
 void skills2_jar();
+void newskills();

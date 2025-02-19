@@ -14,11 +14,11 @@ pros::ADIDigitalOut doinker('G');
 pros::ADIDigitalOut goalClamp1('A');
 pros::ADIDigitalOut goalClamp2('B');
 
-pros::Rotation armSensor (9);
-pros::Motor armMotor (7, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Rotation armSensor (16);
+pros::Motor armMotor (17, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 
-pros::Motor intake1 (5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-pros::Motor intake2 (6, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor intake1 (5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES); //intake
+pros::Motor intake2 (6, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); //conveyer 
 
 pros::Motor leftFront(1, pros::E_MOTOR_GEARSET_06, true); 
 pros::Motor leftMiddle(2, pros::E_MOTOR_GEARSET_06, true); 
@@ -35,11 +35,11 @@ pros::Imu imu(4);
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-1, -2, 3}
+  {3, -2, -1} //port 1 is front
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{11, 12, -13} 
+  ,{-13, 12, 11} //port 11 is front
 
   // IMU Port
   ,4
@@ -146,7 +146,7 @@ void default_constants() {
   chassis.pid_heading_constants_set(4, 0, 35);
   // -- Tune these --
   chassis.pid_drive_constants_set(7, 0.02, 25);
-  chassis.pid_turn_constants_set(3, 0, 20);
+  chassis.pid_turn_constants_set(3, 0.001, 20);
   chassis.pid_swing_constants_set(5, 0, 30);
 
   chassis.pid_turn_exit_condition_set(300_ms, 3_deg, 500_ms, 7_deg, 750_ms, 750_ms);
