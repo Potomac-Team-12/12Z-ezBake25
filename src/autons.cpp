@@ -440,15 +440,15 @@ void newskills(){
   pros::delay(100);
   chassis.pid_wait();
   
-
-  chassis.pid_drive_set(38, DRIVE_SPEED, true);
+  chassis.pid_drive_set(39, DRIVE_SPEED, true);
   pros::delay(100);
-  
+  intake2.move(-127);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-9, DRIVE_SPEED, true);
   pros::delay(100);
   chassis.pid_wait();
+  intake2.move(127);
 
   chassis.pid_turn_set(270, TURN_SPEED);
   pros::delay(100);
@@ -457,6 +457,8 @@ void newskills(){
   chassis.pid_drive_set(36, DRIVE_SPEED, true); //first long run in the line
   pros::delay(100);
   chassis.pid_wait();
+
+  pros::delay(100);
 
   chassis.pid_drive_set(20, 70, false); //second long run in the line
   pros::delay(100);
@@ -493,6 +495,8 @@ void newskills(){
 
   //next side
 
+
+
   chassis.pid_drive_set(8, DRIVE_SPEED, true);
   pros::delay(100);
   chassis.pid_wait();
@@ -521,12 +525,82 @@ void newskills(){
   pros::delay(100);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(-7, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-7.75, DRIVE_SPEED, true);
   pros::delay(100);
   chassis.pid_wait();
 
   goalClamp1.set_value(false); //clamp down
   goalClamp2.set_value(false);
+
+  //ring 1
+  chassis.pid_drive_set(-3, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(26, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(35, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(38, DRIVE_SPEED, true);
+  pros::delay(100);
+  intake2.move(-127);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+  intake2.move(127);
+
+  chassis.pid_turn_set(270, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(36, DRIVE_SPEED, true); //first long run in the line
+  pros::delay(100);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.pid_drive_set(20, 70, false); //second long run in the line
+  pros::delay(100);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.pid_drive_set(-3, DRIVE_SPEED, true); //backs up to not touch the wall
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(35, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(17, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(130, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+
+  intake1.move(0);
+  intake2.move(0);
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
+  pros::delay(100);
+  intake2.move(-127);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(true); //release clamp
+  goalClamp2.set_value(true);
 
 }
 
