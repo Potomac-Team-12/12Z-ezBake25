@@ -30,6 +30,7 @@ AutonFunction autonFunctions[] = {
     {"diff setup - (no stake) - Blue Rings", blue_neg_rings},
     {"red ", red_neg_rings},
     {"new skills", newskills},
+    {"copy of red", redcopy},
     {"Solo AWP Red", soloAwpSafeRed},
     {"Solo AWP Blu", soloAwpSafeBlue},
     // {"Test 24", testAuto},

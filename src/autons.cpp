@@ -239,24 +239,30 @@ void blue_neg_rings(){ //one tile over, no wall stake
   goalClamp1.set_value(true);
   goalClamp2.set_value(true);
   
-  chassis.pid_drive_set(8, DRIVE_SPEED, true);
+  chassis.pid_drive_set(6, DRIVE_SPEED, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(240, TURN_SPEED);
   pros::delay(100);
   chassis.pid_wait();
   
-  chassis.pid_drive_set(-34, DRIVE_SPEED, true); //was -30
-  pros::delay(100);
-  chassis.pid_wait();
-  goalClamp1.set_value(false);
-  goalClamp2.set_value(false);
-  pros::delay(100);
-  chassis.pid_drive_set(2, 127, false, true);
+  chassis.pid_drive_set(-29, DRIVE_SPEED, true); //was -30
   pros::delay(100);
   chassis.pid_wait();
 
-  chassis.pid_turn_set(183, TURN_SPEED);
+  chassis.pid_drive_set(-3, DRIVE_SPEED, true); 
+  pros::delay(100);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(false); //clamp down
+  goalClamp2.set_value(false);
+  // pros::delay(100);
+
+  chassis.pid_drive_set(-5, DRIVE_SPEED, true); 
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(170, TURN_SPEED); //was 180
   pros::delay(100);
   chassis.pid_wait();
 
@@ -266,40 +272,40 @@ void blue_neg_rings(){ //one tile over, no wall stake
   chassis.pid_drive_set(24, DRIVE_SPEED, true);
   pros::delay(100);
   chassis.pid_wait();
-  intake1 = -127;
-  intake2 = -127;
+  // intake1 = -127;
+  // intake2 = -127;
 
   pros::delay(100);
 
-  intake1 = 127;
-  intake2 = 127;
+  // intake1 = 127;
+  // intake2 = 127;
 
-  chassis.pid_turn_set(82.5, TURN_SPEED);
-  pros::delay(100);
-  chassis.pid_wait();
-  
-  chassis.pid_drive_set(14.75, DRIVE_SPEED, true); //first ring
-  pros::delay(100);
-  chassis.pid_wait();
-
-  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
-  intake1 = -127;
-  intake2 = -127;
-  pros::delay(200);
-  intake1 = 127;
-  intake2 = 127;
-  pros::delay(100);
-  chassis.pid_wait();
-
-  chassis.pid_turn_set(62, TURN_SPEED);
+  chassis.pid_turn_set(80, TURN_SPEED);
   pros::delay(100);
   chassis.pid_wait();
   
-  chassis.pid_drive_set(12.5, DRIVE_SPEED, true); //second ring
+  chassis.pid_drive_set(16.5, DRIVE_SPEED, true); //first ring
   pros::delay(100);
   chassis.pid_wait();
 
   chassis.pid_drive_set(-7, DRIVE_SPEED, true);
+  // intake1 = -127;
+  // intake2 = -127;
+  // pros::delay(200);
+  // intake1 = 127;
+  // intake2 = 127;
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(110, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(8.35, DRIVE_SPEED, true); //second ring
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
   // intake1 = -127;
   // intake2 = -127;
   //pros::delay(200);
@@ -309,6 +315,95 @@ void blue_neg_rings(){ //one tile over, no wall stake
   chassis.pid_wait();
 
   chassis.pid_turn_set(0, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(30, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+}
+
+void redcopy(){
+  chassis.drive_angle_set(0);
+  goalClamp1.set_value(true);
+  goalClamp2.set_value(true);
+  
+  chassis.pid_drive_set(6, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-60, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(-29, DRIVE_SPEED, true); //was -30
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-3, DRIVE_SPEED, true); 
+  pros::delay(100);
+  chassis.pid_wait();
+
+  goalClamp1.set_value(false); //clamp down
+  goalClamp2.set_value(false);
+  // pros::delay(100);
+
+  chassis.pid_drive_set(-5, DRIVE_SPEED, true); 
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(10, TURN_SPEED); //was 180
+  pros::delay(100);
+  chassis.pid_wait();
+
+  intake1 = 127;
+  intake2 = 127;
+
+  chassis.pid_drive_set(24, DRIVE_SPEED, true);
+  pros::delay(100);
+  chassis.pid_wait();
+  // intake1 = -127;
+  // intake2 = -127;
+
+  pros::delay(100);
+
+  // intake1 = 127;
+  // intake2 = 127;
+
+  chassis.pid_turn_set(80, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(16.5, DRIVE_SPEED, true); //first ring
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-7, DRIVE_SPEED, true);
+  // intake1 = -127;
+  // intake2 = -127;
+  // pros::delay(200);
+  // intake1 = 127;
+  // intake2 = 127;
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(110, TURN_SPEED);
+  pros::delay(100);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(8.35, DRIVE_SPEED, true); //second ring
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-8, DRIVE_SPEED, true);
+  // intake1 = -127;
+  // intake2 = -127;
+  //pros::delay(200);
+  // intake1 = 127;
+  // intake2 = 127;
+  pros::delay(100);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(185, TURN_SPEED);
   pros::delay(100);
   chassis.pid_wait();
   

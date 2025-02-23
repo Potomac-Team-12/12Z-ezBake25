@@ -15,6 +15,7 @@ void $blue_neg_rings();
 void blue_neg_rings();
 
 void red_neg_rings();
+void redcopy();
 
 
 void skills2_jar();
