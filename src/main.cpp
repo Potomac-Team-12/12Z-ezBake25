@@ -26,7 +26,6 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
-    {"Test 24", testAuto},
     {"$Blue Rings", $blue_neg_rings},
     {"diff setup - (no stake) - Blue Rings", blue_neg_rings},
     {"red ", red_neg_rings},
@@ -108,7 +107,7 @@ void opcontrol() {
     
     
 	while (true) { // --------------
-        // chassis.opcontrol_tank();
+        //chassis.opcontrol_tank();
         chassis.opcontrol_arcade_standard(ez::SPLIT);
 
         // -- Arm Control --
