@@ -26,13 +26,13 @@ ______/\\\____/\\\\\\\\\______/\\\\\\\\\\\\\\\__________________________________
 
 // Enter your autons here!
 AutonFunction autonFunctions[] = {
-    {"$Blue Rings", $blue_neg_rings},
     {"diff setup - (no stake) - Blue Rings", blue_neg_rings},
     {"red ", red_neg_rings},
+    {"red pos", red_pos},
     {"new skills", newskills},
     {"copy of red", redcopy},
-    {"Solo AWP Red", soloAwpSafeRed},
-    {"Solo AWP Blu", soloAwpSafeBlue},
+    // {"Solo AWP Red", soloAwpSafeRed},
+    // {"Solo AWP Blu", soloAwpSafeBlue},
     // {"Test 24", testAuto},
     {"Nothing", doNothingAuto},
     {"Skills2 JAR", skills2_jar}

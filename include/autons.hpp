@@ -17,6 +17,8 @@ void blue_neg_rings();
 void red_neg_rings();
 void redcopy();
 
+void red_pos();
+
 
 void skills2_jar();
 void newskills();

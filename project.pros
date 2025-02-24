@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "12Z-ez25_QTarcade",
+    "project_name": "12Z-ez_Qarcade",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -350,7 +350,7 @@
       }
     },
     "upload_options": {
-      "description": "Arcade ez temp",
+      "description": "EZ Quentin Arcade",
       "icon": "ufo",
       "slot": 1
     },
