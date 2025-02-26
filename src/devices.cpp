@@ -15,9 +15,9 @@ pros::ADIDigitalOut goalClamp1('A');
 pros::ADIDigitalOut goalClamp2('B');
 
 pros::Rotation armSensor (16);
-pros::Motor armMotor (18, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor armMotor (19, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 
-pros::Motor intake1 (5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES); //intake
+pros::Motor intake1 (9, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES); //intake
 pros::Motor intake2 (6, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_DEGREES); //conveyer 
 
 pros::Motor leftFront(1, pros::E_MOTOR_GEARSET_06, true); 
