@@ -7,7 +7,7 @@ extern pros::Controller master;
 extern pros::ADIDigitalOut doinker;
 extern pros::ADIDigitalOut goalClamp1;
 extern pros::ADIDigitalOut goalClamp2;
-extern pros::ADIDigitalOut light;
+extern pros::ADIDigitalOut ClampLED;
 
 extern pros::Rotation armSensor;
 extern pros::Motor armMotor;

@@ -62,6 +62,7 @@ void initialize() {
 
     armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     armSensor.reset();
+    armMotor.set_zero_position(169.5);
 
     // -- Piston Inits --
     goalClamp1.set_value(true);
@@ -102,7 +103,10 @@ void opcontrol() {
 
     // Bools for toggles
     bool lastAState = false;
-    bool lastBState = false;    
+    bool lastBState = false;
+    bool toggleA = false;
+    bool toggleB = false;
+       
     bool clampEngaged = false;
     bool lastR2State = false;
     
@@ -113,31 +117,51 @@ void opcontrol() {
 
         // -- Arm Control --
         // Variables to store the previous states of the buttons
+        // if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !lastAState) {
+        //     toggleA = !toggleA;
+        //     if (toggleA) {
+        //         moveToPositionPID(midPosition);
+        //     } else {
+        //         armMotor.move_velocity(80);  
+        //         while (armSensor.get_angle() > homePosition - 300) {  
+        //             pros::delay(10);
+        //         }
+        //         disengageMotor(); 
+        //     } }
+        // lastAState = master.get_digital(pros::E_CONTROLLER_DIGITAL_A); // Update last state
+
+        // if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !lastBState) {
+        //     toggleB = !toggleB;
+        //     if (toggleB) {
+        //         moveToPositionPID(highPosition);
+        //     } else {
+        //         armMotor.move_velocity(80);  
+        //         while (armSensor.get_angle() > homePosition - 500 + threshold) {  // Stop 5 degrees before
+        //             pros::delay(10);
+        //         }
+        //         disengageMotor(); 
+        //     } }
+        // lastBState = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);  // Update last state
+
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !lastAState) {
             toggleA = !toggleA;
             if (toggleA) {
-                moveToPositionPID(midPosition);
+                armMotor.move_absolute(156.0, 127);
             } else {
-                armMotor.move_velocity(80);  
-                while (armSensor.get_angle() > homePosition - 300) {  
-                    pros::delay(10);
-                }
-                disengageMotor(); 
-            } }
-        lastAState = master.get_digital(pros::E_CONTROLLER_DIGITAL_A); // Update last state
+                armMotor.move_absolute(169.5, 127);
+            }
+        }
+        lastAState = master.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !lastBState) {
             toggleB = !toggleB;
             if (toggleB) {
-                moveToPositionPID(highPosition);
+                armMotor.move_absolute(156.0, 127);
             } else {
-                armMotor.move_velocity(80);  
-                while (armSensor.get_angle() > homePosition - 500 + threshold) {  // Stop 5 degrees before
-                    pros::delay(10);
-                }
-                disengageMotor(); 
-            } }
-        lastBState = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);  // Update last state
+                armMotor.move_absolute(50.0, 127);
+            }
+        }
+        lastBState = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 
         
         // Manual control, if R1 && R2 pressing then L1 and L2
@@ -165,6 +189,7 @@ void opcontrol() {
            
         goalClamp1.set_value(clampEngaged);
         goalClamp2.set_value(clampEngaged);
+        ClampLED.set_value(clampEngaged);
         lastR2State = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2); // Update last state
         
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) { disengageMotor(); motorCheck.suspend();} // Stop remote from buzzing if motor disconnect
