@@ -112,8 +112,8 @@ void opcontrol() {
     
     
 	while (true) { // --------------
-        //chassis.opcontrol_tank();
-        chassis.opcontrol_arcade_standard(ez::SPLIT);
+        chassis.opcontrol_tank();
+        // chassis.opcontrol_]arcade_standard(ez::SPLIT);
 
         // -- Arm Control --
         // Variables to store the previous states of the buttons
