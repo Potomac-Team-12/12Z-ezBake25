@@ -12,9 +12,10 @@ pros::Controller master (pros::E_CONTROLLER_MASTER);
 
 pros::ADIDigitalOut goalClamp1('A');
 pros::ADIDigitalOut goalClamp2('B');
-pros::ADIDigitalOut hang('C');
 pros::ADIDigitalOut doinker('G');
 pros::ADIDigitalOut ClampLED('H');
+
+pros::ADIDigitalOut hang1('D');
 
 pros::Rotation armSensor (18);
 pros::Motor armMotor (19, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);

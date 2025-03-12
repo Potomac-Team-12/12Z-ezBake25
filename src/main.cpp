@@ -104,12 +104,14 @@ void opcontrol() {
     // Bools for toggles
     bool lastAState = false;
     bool lastBState = false;
+    bool lastR2State = false;
+    bool clampEngaged = false;
+    bool lastYstate = false;
+    bool hangEngaged = false;
+
     bool toggleA = false;
     bool toggleB = false;
        
-    bool clampEngaged = false;
-    bool lastR2State = false;
-    
     
 	while (true) { // --------------
         // chassis.opcontrol_tank();
@@ -186,14 +188,18 @@ void opcontrol() {
             else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { intake1 = -127; intake2 = -127; doinker.set_value(false); } 
             else {intake1 = 0; intake2 = 0; doinker.set_value(false); } 
         }
-           
-        goalClamp1.set_value(clampEngaged);
-        goalClamp2.set_value(clampEngaged);
-        ClampLED.set_value(clampEngaged);
-        lastR2State = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2); // Update last state
         
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)) { disengageMotor(); motorCheck.suspend();} // Stop remote from buzzing if motor disconnect
         if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) { armSensor.reset(); }
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y) && !lastYstate) { hangEngaged = !hangEngaged; } //hang
+
+           
+        goalClamp1.set_value(clampEngaged);
+        goalClamp2.set_value(clampEngaged);
+        hang1.set_value(hangEngaged);
+        ClampLED.set_value(clampEngaged);
+        lastR2State = master.get_digital(pros::E_CONTROLLER_DIGITAL_R2); // Update last state
+        lastYstate = master.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
 
 		pros::delay(10);
 	}
