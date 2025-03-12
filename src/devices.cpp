@@ -10,9 +10,10 @@ bool goalClampToggle = false;
 
 pros::Controller master (pros::E_CONTROLLER_MASTER);
 
-pros::ADIDigitalOut doinker('G');
 pros::ADIDigitalOut goalClamp1('A');
 pros::ADIDigitalOut goalClamp2('B');
+pros::ADIDigitalOut hang('C');
+pros::ADIDigitalOut doinker('G');
 pros::ADIDigitalOut ClampLED('H');
 
 pros::Rotation armSensor (18);
